@@ -26,8 +26,8 @@ class VillageTempleProblem2 {
 		for(; j > 2; j-=2) {
 			int FirstPersonMethod = people.get(0)*2 + people.get(j)
 			       + people.get(j-1);
-			int SecondPersonMethod = people.get(0) + people.get(1)*2 
-				+ people.get(j);
+			int SecondPersonMethod = people.get(0) + people.get(1)*2 + people.get(j);
+			//System.out.println("First Method: "+FirstPersonMethod+", SecondPersonMethod: "+SecondPersonMethod);
 			sum += FirstPersonMethod < SecondPersonMethod ? FirstPersonMethod : SecondPersonMethod;
 		}
 		
