@@ -8,15 +8,15 @@ import java.io.*;
 
 class VillageTempleProblem {
 	public static void main( String... args) throws Exception{
-		
+
 		BufferedReader br = new BufferedReader((new InputStreamReader(System.in)));
-		
+
 		System.out.println("Please Enter Number of Elements(Press 0 for taking default list)");
 
 		int totalNumberOfProducts = 0;
 		totalNumberOfProducts = Integer.parseInt(br.readLine());
-        	List<Integer> villagePeople;
-	        if(totalNumberOfProducts==0){
+		List<Integer> villagePeople;
+		if(totalNumberOfProducts==0){
 			villagePeople	= new LinkedList<>(Arrays.asList(1, 7, 6, 7, 10, 50, 25));
 		} else {
 			villagePeople = new LinkedList<Integer>();
@@ -27,36 +27,45 @@ class VillageTempleProblem {
 		}
 
 		System.out.println("List is : "+villagePeople.toString());
-		
 
-        Collections.sort(villagePeople);
-        Deque<Integer> de = new LinkedList(villagePeople);
-        int sum = 0;
-        if (de.size() > 2) {
-            Integer FirstPerson = de.pollFirst();
-            Integer SecondPerson = de.pollFirst();
 
-            while (!de.isEmpty()) {
-                int currentPerson = de.removeLast();
-                /**
-                 * Removed Second Last Element. As Only Last element needed to
-                 * add in sum.
-                 */
-                Integer hiddenPerson = de.pollLast();
-		hiddenPerson = hiddenPerson == null ? FirstPerson : hiddenPerson;
+		Collections.sort(villagePeople);
+		Deque<Integer> de = new LinkedList(villagePeople);
+		int sum = 0;
+		if (de.size() > 2) {
+			Integer FirstPerson = de.pollFirst();
+			Integer SecondPerson = de.pollFirst();
 
-                //sum += FirstPerson + SecondPerson + currentPerson;
-                System.out.println(" + " + SecondPerson + "("+SecondPerson+", "+FirstPerson+") = " + (sum+=SecondPerson));
-                System.out.println(" + " + FirstPerson + "( , "+FirstPerson+")  = " + (sum+=FirstPerson));
-                System.out.println(" + " + currentPerson + "("+currentPerson+", "+hiddenPerson+")  = " + (sum+=currentPerson));
-                if (!de.isEmpty()) {
-                	System.out.println(" + " + SecondPerson + "( , "+SecondPerson+")   = " + (sum+=SecondPerson));
-                 //   sum += SecondPerson;
-                }
-            }
+			while (!de.isEmpty()) {
+				int currentPerson = de.removeLast();
+				/**
+				 * Removed Second Last Element. As Only Last element needed to
+				 * add in sum.
+				 */
+				Integer hiddenPerson = de.pollLast();
 
-            System.out.println("Cost of People Travelling is : " + sum);
-        }
-    
+				//sum += FirstPerson + SecondPerson + currentPerson;
+				if(hiddenPerson != null){
+					System.out.println(" + " + SecondPerson + "("+SecondPerson+", "+FirstPerson+") = " + (sum+=SecondPerson));
+					System.out.println(" + " + FirstPerson + "( , "+FirstPerson+")  = " + (sum+=FirstPerson));
+					/**
+					 * First Person Added Again. 
+					 */
+					de.offerFirst(SecondPerson);
+				} else {
+					hiddenPerson = hiddenPerson == null ? FirstPerson : hiddenPerson;
+				}
+				System.out.println(" + " + currentPerson + "("+currentPerson+", "+hiddenPerson+")  = " + (sum+=currentPerson));
+				if (!de.isEmpty()) {
+					System.out.println(" + " + SecondPerson + "( , "+SecondPerson+")   = " + (sum+=SecondPerson));
+					//   sum += SecondPerson;
+				} 
+			
+			}
+
+			System.out.println("Cost of People Travelling is : " + sum);
+			
+
+		}
 	}
 }
