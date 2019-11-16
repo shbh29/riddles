@@ -18,7 +18,7 @@ class VillageTempleProblem2 {
 			System.out.print("Person "+(i+1)+": ");
 			people.add(Integer.parseInt(br.readLine()));
 		}
-
+		Collections.sort(people);
 		System.out.println("List is: "+people.toString());
 
 		int sum = 0;
