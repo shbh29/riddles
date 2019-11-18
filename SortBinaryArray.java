@@ -1,3 +1,8 @@
+/**
+ * Sort Given Array with Binary elements using one loop only.
+ * e.g: [0, 1,0,0,1,1,0] = [0,0,0,0,1,1,1]
+ * NOTE: NO another array to be used.
+ */
 import java.io.*;
 import java.util.*;
 
