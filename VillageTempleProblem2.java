@@ -1,8 +1,11 @@
 /**
- * Take Village people to temple to other side of river with a boat of two persons with minimum cost.
+ * Take Village people to temple to other side of river with a boat of two persons with minimum cost. Greater cost of two persons on the boat will be considered.
  * e.g. villagePeople = {3, 6, 7, 12 , 19, 23} // where every element is the man with fare price for travelling on boat.
+ * cost of travel is 69 for above example
+ * e.g2: {3, 4, 6, 7} = 22
+ * e.g3: [150, 500, 600, 700] = 2100
+ * e.g4: {3, 4, 6, 7, 7, 13} = 46
  * NOTE: Boat cannot come empty.
- * NOTE: NewApproach
  */
 import java.util.*;
 import java.io.*;
@@ -27,7 +30,7 @@ class VillageTempleProblem2 {
 			int FirstPersonMethod = people.get(0)*2 + people.get(j)
 			       + people.get(j-1);
 			int SecondPersonMethod = people.get(0) + people.get(1)*2 + people.get(j);
-			//System.out.println("First Method: "+FirstPersonMethod+", SecondPersonMethod: "+SecondPersonMethod);
+			System.out.println("First Method: "+FirstPersonMethod+", SecondPersonMethod: "+SecondPersonMethod);
 			sum += FirstPersonMethod < SecondPersonMethod ? FirstPersonMethod : SecondPersonMethod;
 		}
 		
