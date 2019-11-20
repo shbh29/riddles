@@ -3,9 +3,9 @@ import java.util.*;
 import java.lang.*;
 import java.io.*;
 
-class NoOfCoin {
-
-    static Integer[] elements;
+public class NoOfCoin {
+    static List<Integer> elements;
+    static Integer minimumCount;
 
     public static void main(String[] args) {
         //code
@@ -16,64 +16,47 @@ class NoOfCoin {
                 String[] inputArray = br.readLine().split(" ");
                 int target = Integer.parseInt(inputArray[0]);
                 int noOfEle = Integer.parseInt(inputArray[1]);
-                elements = new Integer[noOfEle];
+                elements = new ArrayList<Integer>();
+                minimumCount = null;
                 String[] elementString = br.readLine().split(" ");
                 for (int i = 0; i < noOfEle; i++) {
-                    elements[i] = Integer.parseInt(elementString[i]) > target ? 0 : Integer.parseInt(elementString[i]);
+                    Integer temp = Integer.parseInt(elementString[i]) > target ? 0 : Integer.parseInt(elementString[i]);
+                    elements.add(temp);
                 }
-                //bubble sort
-                for(int i=0; i<elements.length; i++) {
-                    for(int j=i+1; j<elements.length; j++) {
-                        if (elements[i] < elements[j]) {
-                            int temp = elements[j];
-                            elements[j] = elements[i];
-                            elements[i] = temp;
-                        }
-                    }
-                }
+                Collections.sort(elements, Collections.reverseOrder());
                 
-                int res = 0;
-                for (int i = 0; i < elements.length; i++) {
-                    res = getNumberOfCoins(target, i);
-                    if (res != 0) {
-                        break;
-                    }
-                }
+                getNumberOfCoins(target, 0, 0);
                 
-                System.out.println(res);
+                System.out.println(minimumCount);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-    static int getNumberOfCoins(int target, int startIndex) {
+    
+    static int getNumberOfCoins(int target, int startIndex, int prevCount) {
         int count = 0;
-        if (startIndex > elements.length) {
-            return count;
-        }
-        if (target >= elements[startIndex] && elements[startIndex] != 0) {
-            count = target / elements[startIndex];
-            int cover = elements[startIndex] * count;
+        count = target / elements.get(startIndex);
+        while (count >= 0 && (minimumCount == null || minimumCount > (prevCount + count))) {
+            int cover = elements.get(startIndex) * count;
             int due = target - cover;
             if (due != 0) {
-                int res = 0;
-                for (int i = startIndex + 1; i < elements.length; i++) {
-                    res = getNumberOfCoins(due, i);
-                    if (res != 0) {
-                        break;
+                for (int i = startIndex + 1; i < elements.size(); i++) {
+                    if (due >= elements.get(i) && elements.get(i) != 0 && (minimumCount == null || minimumCount > (prevCount + count))) {
+                        getNumberOfCoins(due, i, prevCount + count);
                     }
                 }
-                if (res == 0) {
-                    count -= target / elements[startIndex];
-                } else {
-                    count += res;
-                }
+                count--;
             } else {
+                count += prevCount;
+                if (minimumCount == null || minimumCount > count) {
+                    minimumCount = count;
+                }
                 return count;
             }
         }
         return count;
     }
 }
+
 
